@@ -13,7 +13,6 @@ jobs:
 check-results:
 runs-on: ubuntu-latest
 
-```
 steps:
   - name: Checkout repository
     uses: actions/checkout@v4
@@ -42,4 +41,3 @@ steps:
       GH_TOKEN: ${{ github.token }}
     run: |
       gh workflow disable check.yml
-```
