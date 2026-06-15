@@ -28,13 +28,13 @@ steps:
       pip install requests
 
   - name: Run checker
-    id: checker
     env:
       BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
       CHAT_ID: ${{ secrets.CHAT_ID }}
     run: |
       python checker.py
-      echo "EXIT_CODE=$?" >> $GITHUB_ENV
+      EXIT_CODE=$?
+      echo "EXIT_CODE=$EXIT_CODE" >> $GITHUB_ENV
 
   - name: Disable workflow after notification
     if: env.EXIT_CODE == '10'
