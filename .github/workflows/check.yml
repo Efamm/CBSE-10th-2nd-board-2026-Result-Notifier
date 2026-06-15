@@ -1,43 +1,43 @@
 name: CBSE Result Checker
 
 on:
-schedule:
-- cron: '*/30 * * * *'
-workflow_dispatch:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
 
 permissions:
-actions: write
-contents: read
+  actions: write
+  contents: read
 
 jobs:
-check-results:
-runs-on: ubuntu-latest
+  check-results:
+    runs-on: ubuntu-latest
 
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  - name: Set up Python
-    uses: actions/setup-python@v5
-    with:
-      python-version: '3.12'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-  - name: Install dependencies
-    run: |
-      pip install requests
+      - name: Install dependencies
+        run: |
+          pip install requests
 
-  - name: Run checker
-    env:
-      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-      CHAT_ID: ${{ secrets.CHAT_ID }}
-    run: |
-      python checker.py
-      EXIT_CODE=$?
-      echo "EXIT_CODE=$EXIT_CODE" >> $GITHUB_ENV
+      - name: Run checker
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: |
+          python checker.py
+          EXIT_CODE=$?
+          echo "EXIT_CODE=$EXIT_CODE" >> $GITHUB_ENV
 
-  - name: Disable workflow after notification
-    if: env.EXIT_CODE == '10'
-    env:
-      GH_TOKEN: ${{ github.token }}
-    run: |
-      gh workflow disable check.yml
+      - name: Disable workflow after notification
+        if: env.EXIT_CODE == '10'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow disable check.yml
