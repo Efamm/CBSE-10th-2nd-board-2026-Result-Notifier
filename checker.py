@@ -1,4 +1,4 @@
-```python
+python
 import os
 import sys
 import requests
@@ -58,4 +58,3 @@ try:
 except Exception as e:
     print("Error:", e)
     sys.exit(1)
-```
